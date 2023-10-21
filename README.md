@@ -1,8 +1,11 @@
-# govoice 📢
+<a href="https://ibb.co/gP6psfn"><img src="https://i.ibb.co/gP6psfn/e8507ad3-b1e6-4800-9387-add46d29f17d.jpg" alt="e8507ad3-b1e6-4800-9387-add46d29f17d" border="0"></a>
+
+# govoice 📢 
 
 An Android app that lets users interact with French policies using NLP, data visualization, and recommendation techniques. 
 
-![govoice Logo](blob:https://www.bing.com/e8507ad3-b1e6-4800-9387-add46d29f17d)
+
+![govoice Logo](https://i.ibb.co/gP6psfn/e8507ad3-b1e6-4800-9387-add46d29f17d.jpg)
 
 **govoice** is an Android app that lets users interact with French policies using natural language processing (NLP), data visualization, and recommendation techniques.
 
@@ -42,19 +45,24 @@ To contribute to govoice, follow these steps:
 1. Fork this repository.
 
 2. Create a branch:
-```bash
- git checkout -b <branch_name>
+   ```bash
+   git checkout -b <branch_name>
 
 3. Make your changes and commit them:
-```bash
- git commit -m '<commit_message>'
+
+   ```bash
+   git commit -m '<commit_message>'
 
 4. Push to the original branch:
-```bash
- git push origin <project_name>/<location>
+   ```bash
+   git push origin <project_name>/<location>
+
+
 5. Create the pull request. Alternatively, see the GitHub documentation on ![creating a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
 
 ## License 📄
 This project uses the ![MIT license](https://opensource.org/license/mit/).
 
-Thanks ![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+## Thanks you 
+
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
