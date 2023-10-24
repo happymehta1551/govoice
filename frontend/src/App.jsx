@@ -9,7 +9,7 @@ import UserProfile from './screens/UserProfile';
 import AddPost from './screens/AddPost';
 import Home from '../assets/home.svg'
 import User from '../assets/user.svg'
-import Add from '../assets/add-circle.svg'
+import Add from '../assets/add.svg'
 
 
 const Stack = createStackNavigator();

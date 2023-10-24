@@ -89,26 +89,26 @@ const HomePage = ({ navigation }) => {
                             </View>
                         )}
                         <View style={styles.column4}>
-                            <View style={{flex: 0.4, flexDirection: 'row'}}>
-                            <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
-                                <Like width={25} height={25} />
-                                <Text style={styles.like}>
-                                    {10}
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={handleDislike} style={styles.actionButton}>
-                            <Dislike width={25} height={25}/>
-                            <Text style={styles.like}>
-                                    {'3'}
-                                </Text>
-                            </TouchableOpacity>
+                            <View style={{ flex: 0.4, flexDirection: 'row' }}>
+                                <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
+                                    <Like width={25} height={25} />
+                                    <Text style={styles.like}>
+                                        {10}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleDislike} style={styles.actionButton}>
+                                    <Dislike width={25} height={25} />
+                                    <Text style={styles.like}>
+                                        {'3'}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
-                            <View style={{flex: 0.6}}>
-                            <TouchableOpacity style={styles.actionButton}>
-                                <Text style={{color: 'green'}}>
-                                    Comment
-                                </Text>
-                            </TouchableOpacity>
+                            <View style={{ flex: 0.6 }}>
+                                <TouchableOpacity style={styles.actionButton}>
+                                    <Text style={{ color: 'green' }}>
+                                        Comment
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -215,11 +215,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         flex: 1,
         alignItems: 'center',
-        flexDirection: 'row', 
+        flexDirection: 'row',
         justifyContent: 'center'
     },
-    like:{
-        color:'#545454',
+    like: {
+        color: '#545454',
         paddingLeft: 5
     },
     backgroundVideo: {
@@ -232,3 +232,5 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
+
+
