@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Like from '../../assets/like.svg';
+import LikeFilled from '../../assets/like-filled.svg';
 import Dislike from '../../assets/dislike.svg';
+import DislikeFilled from '../../assets/dislike-filled.svg';
+import Comment from '../../assets/comment.svg';
+import Logo from '../../assets/logo.svg';
 
 const dummyUsers = [
     {
@@ -10,8 +14,10 @@ const dummyUsers = [
         profileImage: 'https://i.pravatar.cc/300',
         title: 'Title 1',
         subtitle: 'Subtitle 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl',
         media: 'https://picsum.photos/1920/1080',
+        liked: false,
+        disliked: false,
     },
     {
         id: 2,
@@ -21,36 +27,47 @@ const dummyUsers = [
         subtitle: 'Subtitle 2',
         description: 'This is another sample description for User 2. It can be longer or shorter as needed.',
         media: 'https://picsum.photos/1920/1080',
+        liked: false,
+        disliked: false,
     },
     // Add more user data entries here...
 ];
 
 const HomePage = ({ navigation }) => {
     const [descriptionExpanded, setDescriptionExpanded] = useState(dummyUsers.map(() => false));
-    const [liked, setLiked] = useState(false);
-    const [disliked, setDisliked] = useState(false);
-
-    const handleLike = () => {
-        // Call API to like
-        setLiked(!liked);
-    };
-
-    const handleDislike = () => {
-        // Call API to dislike
-        setDisliked(!disliked);
-    };
-
+    const [likedUsers, setLikedUsers] = useState()
     const toggleDescriptionExpanded = (index) => {
         const newDescriptionExpanded = [...descriptionExpanded];
         newDescriptionExpanded[index] = !newDescriptionExpanded[index];
         setDescriptionExpanded(newDescriptionExpanded);
     };
 
+    const handleLike = (index) => {
+        const updatedUsers = [...dummyUsers];
+        updatedUsers[index].liked = !updatedUsers[index].liked;
+        // If liked, make sure disliked is reset
+        if (updatedUsers[index].liked) {
+            updatedUsers[index].disliked = false;
+        }
+        setLikedUsers(updatedUsers);
+    };
+
+    const handleDislike = (index) => {
+        const updatedUsers = [...dummyUsers];
+        updatedUsers[index].disliked = !updatedUsers[index].disliked;
+        // If disliked, make sure liked is reset
+        if (updatedUsers[index].disliked) {
+            updatedUsers[index].liked = false;
+        }
+        setLikedUsers(updatedUsers);
+    };
+
     return (
         <View style={{ backgroundColor: "white" }}>
             <ScrollView>
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 20 }}>
-                    <Text style={styles.title}>GOVOICE</Text>
+                <Logo width={200} height={60} />
+                    {/* <Text style={styles.title}>GOVOICE</Text> */}
                 </View>
                 <View style={styles.columnMain}>
                     <Text style={styles.titleMain}>Timeline</Text>
@@ -90,24 +107,25 @@ const HomePage = ({ navigation }) => {
                         )}
                         <View style={styles.column4}>
                             <View style={{ flex: 0.4, flexDirection: 'row' }}>
-                                <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
-                                    <Like width={25} height={25} />
+                                <TouchableOpacity onPress={() => handleLike(index)} style={styles.actionButton}>
+                                    {user.liked ? <LikeFilled width={25} height={25} /> : <Like width={25} height={25} />}
                                     <Text style={styles.like}>
                                         {10}
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleDislike} style={styles.actionButton}>
-                                    <Dislike width={25} height={25} />
+                                <TouchableOpacity onPress={() => handleDislike(index)} style={styles.actionButton}>
+                                    {user.disliked ? <DislikeFilled width={25} height={25} /> : <Dislike width={25} height={25} />}
                                     <Text style={styles.like}>
                                         {'3'}
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ flex: 0.6 }}>
+                            <View style={{ flex: 0.6, alignItems: 'flex-end' }}>
                                 <TouchableOpacity style={styles.actionButton}>
-                                    <Text style={{ color: 'green' }}>
+                                <Comment width={23} height={23} />
+                                    {/* <Text style={{ color: 'green' }}>
                                         Comment
-                                    </Text>
+                                    </Text> */}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -134,18 +152,17 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
         elevation: 2,
         borderRadius: 10,
-
     },
     columnMain: {
         padding: 10,
         paddingLeft: 20,
-        paddingBottom: 40
+        paddingBottom: 40,
     },
     titleMain: {
         fontSize: 30,
         fontWeight: '700',
         color: 'black',
-        lineHeight: 34.5
+        lineHeight: 34.5,
     },
     subtitleMain: {
         fontSize: 17.47,
@@ -167,7 +184,7 @@ const styles = StyleSheet.create({
         fontSize: 17.47,
         fontWeight: '500',
         color: 'black',
-        lineHeight: 26.21
+        lineHeight: 26.21,
     },
     column2: {
         padding: 10,
@@ -175,28 +192,24 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black'
+        color: 'black',
     },
     subtitle: {
         fontSize: 16,
         color: '#F58960',
         marginLeft: 10,
-        // lineHeight: 26.21,
-        fontWeight: '700'
+        fontWeight: '700',
     },
-
     time: {
         fontSize: 13,
         color: '#F58960',
-        // lineHeight: 26.21,
         fontWeight: '500',
-        paddingTop: 20
+        paddingTop: 20,
     },
-
     description: {
         fontSize: 16,
         overflow: 'hidden',
-        color: 'black'
+        color: 'black',
     },
     column3: {
         padding: 10,
@@ -216,11 +229,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     like: {
         color: '#545454',
-        paddingLeft: 5
+        paddingLeft: 5,
     },
     backgroundVideo: {
         position: 'absolute',
@@ -232,5 +245,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
-
-
