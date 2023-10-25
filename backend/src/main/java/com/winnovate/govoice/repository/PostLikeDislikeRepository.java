@@ -7,8 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PostLikeDislikeRepository extends JpaRepository<PostLikeDislike,Integer> {
 
-    @Query("SELECT pld FROM PostLikeDislike pld " +
-            "WHERE pld.p_id.id = :pId AND pld.cust_id.id = :custId")
+    @Query("SELECT pld FROM PostLikeDislike pld WHERE pld.p_id.id = :pId AND pld.cust_id.id = :custId")
     PostLikeDislike findByPIdAndCustId(@Param("pId") int pId, @Param("custId") int custId);
 }
 
