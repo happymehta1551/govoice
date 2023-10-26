@@ -2,7 +2,6 @@ package com.winnovate.govoice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -54,23 +53,18 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "profile_pic")
+    private String profile_pic;
+
     @Column(name = "cust_active")
     private String cust_active;
 
-    @Column(name = "region")
-    private String region;
+    @Column(name = "insert_timestamp")
+    private String insert_timestamp;
 
-//    @Column(name = "insert_timestamp")
-//    private String insert_timestamp;
-//
-//    @Column(name = "update_timestamp")
-//    private String update_timestamp;
+    @Column(name = "update_timestamp")
+    private String update_timestamp;
 
     @Column(name = "password")
     private String password;
-
-    @Lob
-    @Column(name = "profile_image")
-    private byte[] profile_image;
-
 }

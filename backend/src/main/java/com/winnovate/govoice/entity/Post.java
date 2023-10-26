@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +40,11 @@ public class Post {
     @Column(name = "post_active")
     private String post_active;
 
-//    @Column(name = "post_timestamp")
-//    private String post_timestamp;
-//
-//    @Column(name = "update_timestamp")
-//    private String update_timestamp;
+    @Column(name = "post_timestamp")
+    private String post_timestamp;
 
-    @Lob
-    @Column(name = "post_image")
-    private byte[] post_image;
+    @Column(name = "update_timestamp")
+    private String update_timestamp;
 
     private List<Integer> categories = new ArrayList<>();
 }

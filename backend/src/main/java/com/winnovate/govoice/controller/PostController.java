@@ -2,18 +2,14 @@ package com.winnovate.govoice.controller;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winnovate.govoice.entity.Category;
-import com.winnovate.govoice.entity.PostComment;
 import com.winnovate.govoice.service.CategoryService;
-import com.winnovate.govoice.service.PostCommentService;
 import com.winnovate.govoice.service.PostLikeDislikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.winnovate.govoice.entity.Post;
 import com.winnovate.govoice.service.PostService;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/post-management")
@@ -25,27 +21,13 @@ public class PostController {
     private PostLikeDislikeService postLikeDislikeService;
 
     @Autowired
-    private PostCommentService postCommentService;
-
-    @Autowired
     private CategoryService categoryService;
 
     //Manage Posts
     @PostMapping("/post")
-    public Post createPost(@RequestParam("post_image") MultipartFile post_image, @RequestParam String postJsonData) {
-        Post jsonObject = null;
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            jsonObject = objectMapper.readValue(postJsonData, Post.class);
-            System.out.println("JSON object: " + jsonObject);
-            jsonObject.setPost_image(post_image.getBytes());
-            return postService.savePost(jsonObject);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return jsonObject;
-        }
+    public Post createPost(@RequestBody Post post) {
+        return postService.savePost(post);
     }
-
     @DeleteMapping("/post/{id}")
     public int deletePost(@PathVariable int id) {
         return postService.deletePost(id);
@@ -74,32 +56,6 @@ public class PostController {
     }
 
 
-    //Add and retrieve Comments
-    @PostMapping("/post/comments")
-    public PostComment addPostComment(@RequestBody PostComment postComment) {
-        return postCommentService.addPostComment(postComment);
-    }
-
-    @GetMapping("/post/{p_id}/comments")
-    public List<PostComment> getPostComment(@PathVariable int p_id) {
-        return postCommentService.getAllCommentsByPid(p_id);
-    }
 
 
-    //Retrieve Customer post activities
-    @GetMapping("/post/likes")
-    public List<Post> getCustomerLikedPost(@RequestParam int cust_id) {
-        return postService.getAllLikedPost(cust_id);
-    }
-
-    @GetMapping("/post/dislikes")
-    public List<Post> getCustomerDislikedPost(@RequestParam int cust_id) {
-        return postService.getAllDislikedPost(cust_id);
-    }
-
-    @GetMapping("/post/comments")
-    public List<PostComment> getCustomerCommentedPost(@RequestParam int cust_id) {
-        return postCommentService.getAllCommentsByCustid(cust_id);
-    }
-    
 }

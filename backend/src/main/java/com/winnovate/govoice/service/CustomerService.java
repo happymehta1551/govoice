@@ -16,7 +16,7 @@ public class CustomerService {
 
     public Customer getCustomerById(int id) {
         Integer cu_id = (Integer) id;
-        return customerRepository.findById(cu_id).orElse(null);
+        return customerRepository.findById(cu_id).orElse("User not found"+id);
     }
 
     public String deleteCustomer(int id) {
