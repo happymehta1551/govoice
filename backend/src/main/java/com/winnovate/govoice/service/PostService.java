@@ -44,4 +44,12 @@ public class PostService {
         postRepository.deleteById(id);
         return id;
     }
+
+    public List<Post> getAllLikedPost(int cust_id){
+        return postRepository.getCustomerLikedPost(cust_id);
+    }
+
+    public List<Post> getAllDislikedPost(int cust_id){
+        return postRepository.getCustomerDislikedPost(cust_id);
+    }
 }
