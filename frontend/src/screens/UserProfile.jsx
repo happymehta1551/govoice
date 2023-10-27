@@ -1,245 +1,143 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-const UserProfile = () => {
-  const [profileImage, setProfileImage] = useState('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eo_circle_blue_letter-j.svg/1024px-Eo_circle_blue_letter-j.svg.png?20200417110859');
-  const [selectedButton, setSelectedButton] = useState('likedPosts'); // Set 'likedPosts' as the default selected button
+import React from 'react';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
-  const iconImages = {
-    liked: require('./assets/likedIcon.png'),
-    disliked: require('./assets/dislikedIcon.png'),
-    commented: require('./assets/commentedIcon.png'),
-  };
-
-  const user = {
-    name: 'John Doe',
-    phone: '+1234567890',
-    email: 'john@example.com',
-    dob: '13th Aug 1995',
-  };
-  const handleSettingsPress = () => {
-  };
-
-  const handleLogoutPress = () => {
-  };
-  const handleProfileImageChange = () => {
-
-    };
-
-  const handleButtonSelect = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
-
-  const getContentForSelectedButton = () => {
-    if (selectedButton === 'likedPosts') {
-      return (
-        <View>
-          <Text style={styles.contentText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula ipsum quis lacinia.
-          </Text>
-          <Text style={styles.contentText}>
-            Integer nec justo vel dui euismod fermentum. Proin eu orci non est varius ultrices.
-          </Text>
-        </View>
-      );
-    } else if (selectedButton === 'dislikedPosts') {
-      return (
-        <View>
-          <Text style={styles.contentText}>
-            Cras convallis, arcu id interdum bibendum, nulla est lacinia mi, eget sollicitudin justo odio et dui.
-          </Text>
-          <Text style={styles.contentText}>
-            Vestibulum tincidunt mi sit amet justo euismod, non tincidunt ante iaculis.
-          </Text>
-        </View>
-      );
-    } else if (selectedButton === 'commentedPosts') {
-      return (
-        <View>
-          <Text style={styles.contentText}>
-            Nunc vestibulum augue et sem fermentum, ac fermentum sapien lacinia.
-          </Text>
-          <Text style={styles.contentText}>
-            Fusce at est in nulla fermentum accumsan eget ut velit.
-          </Text>
-        </View>
-      );
-    } else {
-      return null; // No content to display when no button is selected.
-    }
-  };
-
+const UserProfileScreen = () => {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.editProfileText}>Profile</Text>
+      </View>
+      <View style={styles.profileInfo}>
       <View style={styles.profileImageContainer}>
-        <TouchableOpacity onPress={handleProfileImageChange}>
-          <Image source={{ uri: profileImage }} style={styles.profileImage} />
-          <Text style={styles.changeProfileImageText}>Change Profile Picture</Text>
-        </TouchableOpacity>
+          <Image
+            source={{
+              uri:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eo_circle_blue_letter-j.svg/1024px-Eo_circle_blue_letter-j.svg.png?20200417110859',
+            }}
+            style={styles.profileImage}
+          />
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.labelText}>Name</Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputText}>Edit your name</TextInput>
+          </View>
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.labelText}>Email</Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputText}>example@xyz.com</TextInput>
+          </View>
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.labelText}>Password</Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputText}>************</TextInput>
+          </View>
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.labelText}>Date of Birth</Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputText}>23/05/1995</TextInput>
+          </View>
+        </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.labelText}>Country/Region</Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.inputText}>Nigeria</TextInput>
+          </View>
+        </View>
+        <View>
+          <Button Text="Save Changes"></Button>
+          
+        </View>
       </View>
-
-      <Text style={styles.username}>{user.name}</Text>
-
-      <View style={styles.userDetails}>
-        <Text style={styles.detailLabel}>Phone Number:</Text>
-        <Text style={styles.detailText}>{user.phone}</Text>
-        <Text style={styles.detailLabel}>Email:</Text>
-        <Text style={styles.detailText}>{user.email}</Text>
-        <Text style={styles.detailLabel}>Date of Birth:</Text>
-        <Text style={styles.detailText}>{user.dob}</Text>
-      </View>
-
-      <View style={styles.actionButtons}>
-        <TouchableOpacity
-          onPress={() => handleButtonSelect('likedPosts')}
-          style={[
-            styles.actionButton,
-            selectedButton === 'likedPosts' ? styles.selectedButton : null,
-          ]}
-        >
-          <Image source={iconImages.liked} style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleButtonSelect('dislikedPosts')}
-          style={[
-            styles.actionButton,
-            selectedButton === 'dislikedPosts' ? styles.selectedButton : null,
-          ]}
-        >
-          <Image source={iconImages.disliked} style={styles.icon} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleButtonSelect('commentedPosts')}
-          style={[
-            styles.actionButton,
-            selectedButton === 'commentedPosts' ? styles.selectedButton : null,
-          ]}
-        >
-          <Image source={iconImages.commented} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.contentContainer}>{getContentForSelectedButton()}</View>
-      <View style={styles.horizontalButtonContainer}>
-        <TouchableOpacity onPress={handleSettingsPress} style={styles.horizontalButton}>
-          <Text style={styles.horizontalButtonText}>Settings</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleLogoutPress} style={styles.horizontalButton}>
-          <Text style={styles.horizontalButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: 'white',
   },
-  profileImageContainer: {
+  fieldContainer: {
+    height: 40,
+    marginTop: 50,
+  },
+  header: {
+    width: '100%',
+    height: 54.42,
+    marginTop: 15,
     alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'center',
+  },
+  editProfileText: {
+    fontSize: 20,
+    fontFamily: 'Inter',
+    fontWeight: '700',
+    color: 'black',
+  },
+  profileInfo: {
+    position: 'relative',
+    top: 54.42,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: 120,
+    height: 120,
+    borderRadius: 9999,
+    borderWidth: 5,
+    borderColor: 'white',
   },
-  changeProfileImageText: {
-    marginTop: 5,
-    textAlign: 'center',
-    color: '#3498db',
+  nameInfo: {
+    marginTop: 19.72,
   },
-  username: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  userDetails: {
-    marginBottom: 20,
-  },
-  detailLabel: {
+  labelText: {
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  detailText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  actionButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  actionButton: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#3498db',
+    fontFamily: 'Inter',
+    fontWeight: '700',
     color: 'black',
-    borderRadius: 5,
-    margin: 5,
   },
-  // buttonText: {
-  //   textAlign: 'center',
-  //   color: 'black',
-  //   fontWeight: 'bold',
-  // },
-  // buttonTextForLike: {
-  //   textAlign: 'center',
-  //   marginTop:8,
-  //   color: 'black',
-  //   fontWeight: 'bold',
-  // },
-  selectedButton: {
-    backgroundColor: '#b2b8c2', // Highlight color for selected button
+  inputContainer: {
+    width: '100%',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(83.94, 76.01, 76.01, 0.14)',
+    justifyContent: 'center',
+    paddingLeft: 16.88,
   },
-  contentContainer: {
-    backgroundColor: '#d0d4db',
-    padding: 20,
-    borderRadius: 10,
-    borderColor:'black',
-    margin: 10,
+  inputText: {
+    fontSize: 14,
+    fontFamily: 'Inter',
+    fontWeight: '500',
+    color: '#544C4C',
   },
-  contentHeader: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  // Define styles for Email, Password, Date of Birth, and Country/Region similarly
+  inputContainer: {
+    width: '100%',
+    height: 39,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(83.94, 76.01, 76.01, 0.14)',
+    marginTop: 19.72,
+    justifyContent: 'center',
+    paddingLeft: 16.88,
   },
-  // contentText: {
-  //   color:'black',
-  //   fontSize: 16,
-  //   marginBottom: 10,
-  // },
-  likedPosts: {
-    backgroundColor: '#f2f2f2',
-    padding: 20,
-    borderRadius: 10,
+  inputText: {
+    fontSize: 14,
+    fontFamily: 'Inter',
+    fontWeight: '500',
+    color: '#544C4C',
   },
-  icon: {
-    marginLeft:27,
-    width: 30, // Adjust the width and height to fit icons
-    height: 32,
-  },
-  horizontalButtonContainer: {
-    flexDirection: 'row', // Display buttons horizontally
-    justifyContent: 'space-between', // Add space between buttons
-    marginTop: 10,
-  },
-  horizontalButton: {
-    flex: 1, // Each button takes equal space
-    backgroundColor: '#3498db',
-    padding: 15,
-    borderRadius: 5,
+  profileImageContainer: {
+    flex: 1, // Center content vertically and horizontally
     alignItems: 'center',
-    marginHorizontal: 5,
-  },
-  horizontalButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+    justifyContent: 'center',
+    marginBottom: 50
+  }
 });
 
-export default UserProfile;
-
+export default UserProfileScreen;

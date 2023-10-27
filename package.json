@@ -1,0 +1,11 @@
+{
+  "name": "govoice",
+  "version": "1.0.0",
+  "description": "<a href=\"https://ibb.co/gP6psfn\"><img src=\"https://i.ibb.co/gP6psfn/e8507ad3-b1e6-4800-9387-add46d29f17d.jpg\" alt=\"e8507ad3-b1e6-4800-9387-add46d29f17d\" border=\"0\"></a>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
