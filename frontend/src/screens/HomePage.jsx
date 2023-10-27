@@ -22,259 +22,28 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import environment from '../environment';
 import { formatDistanceToNow } from 'date-fns';
 
-const dummyUsers = [
-    {
-        "post": {
-            "p_id": 1,
-            "cust_id": 1,
-            "title": "First Post",
-            "description": "This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.",
-            "like_count": 16,
-            "dislike_count": 4,
-            "comment_count": 6,
-            "post_active": "1",
-            "post_image": null,
-            "categories": null
-        },
-        "customer": {
-            "cust_id": 1,
-            "first_name": "John",
-            "last_name": "Doe",
-            "ph_no": "123-456-7890",
-            "email": "john.doe@email.com",
-            "gender": "Male",
-            "country": "USA",
-            "state": "New York",
-            "city": "New York",
-            "pincode": "10001",
-            "flag_verify": "1",
-            "dob": "1990-05-15",
-            "role": "C",
-            "cust_active": "1",
-            "region": null,
-            "password": "john",
-            "profile_image": null
-        },
-        "postComments": [
-            {
-                "pc_id": 1,
-                "cust_id": 1,
-                "p_id": 1,
-                "comment": "Great first post!"
-            },
-            {
-                "pc_id": 2,
-                "cust_id": 2,
-                "p_id": 1,
-                "comment": "Looking forward to more posts from you."
-            },
-            {
-                "pc_id": 9,
-                "cust_id": 1,
-                "p_id": 1,
-                "comment": "Added new post"
-            },
-            {
-                "pc_id": 10,
-                "cust_id": 1,
-                "p_id": 1,
-                "comment": "Added new comment in post-1"
-            }
-        ],
-        "categoryList": [
-            {
-                "cat_id": 4,
-                "cat_name": "Students",
-                "cat_description": "Student",
-                "cat_timestamp": "2023-10-27 01:41:14",
-                "update_timestamp": "2023-10-27 01:41:14"
-            }
-        ]
-    },
-    {
-        "post": {
-            "p_id": 2,
-            "cust_id": 2,
-            "title": "Summer Vacation",
-            "description": "Enjoying the sun and sand!",
-            "like_count": 15,
-            "dislike_count": 1,
-            "comment_count": 7,
-            "post_active": "1",
-            "post_image": null,
-            "categories": null
-        },
-        "customer": {
-            "cust_id": 2,
-            "first_name": "Alice",
-            "last_name": "Smith",
-            "ph_no": "987-654-3210",
-            "email": "alice.smith@email.com",
-            "gender": "Female",
-            "country": "USA",
-            "state": "California",
-            "city": "Los Angeles",
-            "pincode": "90001",
-            "flag_verify": "1",
-            "dob": "1985-09-20",
-            "role": "C",
-            "cust_active": "1",
-            "region": null,
-            "password": "",
-            "profile_image": null
-        },
-        "postComments": [
-            {
-                "pc_id": 3,
-                "cust_id": 3,
-                "p_id": 2,
-                "comment": "I wish I could go on a summer vacation too."
-            },
-            {
-                "pc_id": 4,
-                "cust_id": 4,
-                "p_id": 2,
-                "comment": "Your pictures are amazing!"
-            }
-        ],
-        "categoryList": [
-            {
-                "cat_id": 1,
-                "cat_name": "Travel",
-                "cat_description": "Travel",
-                "cat_timestamp": "2023-10-20 16:41:14",
-                "update_timestamp": "2023-10-20 16:41:14"
-            }
-        ]
-    },
-    {
-        "post": {
-            "p_id": 3,
-            "cust_id": 3,
-            "title": "Tech News",
-            "description": "New tech gadgets and updates.",
-            "like_count": 20,
-            "dislike_count": 3,
-            "comment_count": 8,
-            "post_active": "1",
-            "post_image": null,
-            "categories": null
-        },
-        "customer": {
-            "cust_id": 3,
-            "first_name": "Bob",
-            "last_name": "Johnson",
-            "ph_no": "555-555-5555",
-            "email": "bob.johnson@email.com",
-            "gender": "Male",
-            "country": "USA",
-            "state": "Texas",
-            "city": "Dallas",
-            "pincode": "75001",
-            "flag_verify": "0",
-            "dob": "1988-11-10",
-            "role": "GO",
-            "cust_active": "1",
-            "region": null,
-            "password": "",
-            "profile_image": null
-        },
-        "postComments": [
-            {
-                "pc_id": 5,
-                "cust_id": 1,
-                "p_id": 3,
-                "comment": "Exciting tech news!"
-            }
-        ],
-        "categoryList": [
-            {
-                "cat_id": 2,
-                "cat_name": "Technology",
-                "cat_description": "Tech",
-                "cat_timestamp": "2023-10-20 16:41:14",
-                "update_timestamp": "2023-10-20 16:41:14"
-            }
-        ]
-    },
-    {
-        "post": {
-            "p_id": 4,
-            "cust_id": 4,
-            "title": "Travel Adventure",
-            "description": "Exploring new places and cultures.",
-            "like_count": 18,
-            "dislike_count": 0,
-            "comment_count": 12,
-            "post_active": "1",
-            "post_image": null,
-            "categories": null
-        },
-        "customer": {
-            "cust_id": 4,
-            "first_name": "Emma",
-            "last_name": "Wilson",
-            "ph_no": "222-333-4444",
-            "email": "emma.wilson@email.com",
-            "gender": "Female",
-            "country": "USA",
-            "state": "California",
-            "city": "San Francisco",
-            "pincode": "94101",
-            "flag_verify": "1",
-            "dob": "1992-03-25",
-            "role": "C",
-            "cust_active": "1",
-            "region": null,
-            "password": "",
-            "profile_image": null
-        },
-        "postComments": [
-            {
-                "pc_id": 6,
-                "cust_id": 5,
-                "p_id": 4,
-                "comment": "I love traveling and exploring new places."
-            }
-        ],
-        "categoryList": [
-            {
-                "cat_id": 1,
-                "cat_name": "Travel",
-                "cat_description": "Travel",
-                "cat_timestamp": "2023-10-20 16:41:14",
-                "update_timestamp": "2023-10-20 16:41:14"
-            },
-            {
-                "cat_id": 4,
-                "cat_name": "Students",
-                "cat_description": "Student",
-                "cat_timestamp": "2023-10-20 16:41:14",
-                "update_timestamp": "2023-10-20 16:41:14"
-            }
-        ]
-    }]
-
 const HomePage = ({ navigation }) => {
-    const [descriptionExpanded, setDescriptionExpanded] = useState(dummyUsers.map(() => false));
+    const [likedUsers, setLikedUsers] = useState([])
+    const [descriptionExpanded, setDescriptionExpanded] = useState(likedUsers.map(() => false));
     const [commentModalVisible, setCommentModalVisible] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null);
+    const [selectedPost, setSelectedPost] = useState({ postComments: [] });
     const [commentText, setCommentText] = useState(''); // State for comment input
-    const [likedUsers, setLikedUsers] = useState()
+    const [likedPostIds, setLikedPostIds] = useState([]);
+    const [dislikedPostIds, setDislikedPostIds] = useState([]);
 
-    // useEffect(() => {
-    //     fetch(`${environment.baseUrl}/post-management/posts`, {
-    //     }).then(Response => {
-    //         Response.json().then(response => {
-    //             console.log(response.response.json(), 'testttt to check ');
-    //             setLikedUsers(response.response.json())
-    //         });
-    //     })
-    // }, [])
+    useEffect(() => {
+        fetch(`${environment.baseUrl}/post-management/posts`, {
+        }).then(Response => {
+            Response.json().then(response => {
+                // console.log(response.response, 'testttt to check ');
+                setLikedUsers(response.response)
+            });
+        })
+    }, [])
 
-    // useEffect(() => {
-    //     console.log(likedUsers, 'userr');
-    // }, [likedUsers])
+    useEffect(() => {
+        // console.log(likedUsers, 'userr');
+    }, [likedUsers])
 
     const toggleDescriptionExpanded = (index) => {
         const newDescriptionExpanded = [...descriptionExpanded];
@@ -282,24 +51,66 @@ const HomePage = ({ navigation }) => {
         setDescriptionExpanded(newDescriptionExpanded);
     };
 
-    const handleLike = (index) => {
-        const updatedUsers = [...dummyUsers];
-        updatedUsers[index].liked = !updatedUsers[index].liked;
-        // If liked, make sure disliked is reset
-        if (updatedUsers[index].liked) {
-            updatedUsers[index].disliked = false;
+    const handleLike = (index, user) => {
+
+        const postId = user.post.p_id;
+        if (likedPostIds.includes(postId)) {
+            // Post is already liked, so remove it from the likedPostIds
+            setLikedPostIds(likedPostIds.filter(id => id !== postId));
+        } else {
+            // Post is not liked, so add it to the likedPostIds
+            setLikedPostIds([...likedPostIds, postId]);
         }
-        setLikedUsers(updatedUsers);
+
+        fetch(`${environment.baseUrl}/post-management/post/${user.post.p_id}/likes?c_id=${user.customer.cust_id}`, {
+            method: 'POST'
+        }).then(Response => {
+            Response.json().then(response => {
+                // console.log(response, 'latest post liked');
+                const postIndex = likedUsers.findIndex(post => post.post.p_id === user.post.p_id);
+                if (postIndex !== -1) {
+                    // Update the liked and disliked properties
+                    likedUsers[postIndex].liked = true;
+                    likedUsers[postIndex].disliked = false;
+                    // Update other properties as needed from the response
+                    likedUsers[postIndex].post.like_count = response.like_count; // Update the like_count
+                    // Add other updates as needed
+                }
+                setLikedUsers([...likedUsers]); // Update the state
+            });
+        })
+
     };
 
-    const handleDislike = (index) => {
-        const updatedUsers = [...dummyUsers];
-        updatedUsers[index].disliked = !updatedUsers[index].disliked;
-        // If disliked, make sure liked is reset
-        if (updatedUsers[index].disliked) {
-            updatedUsers[index].liked = false;
+    const handleDislike = (index, user) => {
+
+        const postId = user.post.p_id;
+        if (dislikedPostIds.includes(postId)) {
+            // Post is already disliked, so remove it from dislikedPostIds
+            setDislikedPostIds(dislikedPostIds.filter(id => id !== postId));
+        } else {
+            // Post is not disliked, so add it to dislikedPostIds and remove from likedPostIds
+            setDislikedPostIds([...dislikedPostIds, postId]);
+            setLikedPostIds(likedPostIds.filter(id => id !== postId));
         }
-        setLikedUsers(updatedUsers);
+
+        fetch(`${environment.baseUrl}/post-management/post/${user.post.p_id}/dislikes?c_id=${user.customer.cust_id}`, {
+            method: 'POST'
+        }).then(Response => {
+            Response.json().then(response => {
+                // console.log(response, 'latest post disliked');
+                const postIndex = likedUsers.findIndex(post => post.post.p_id === user.post.p_id);
+                if (postIndex !== -1) {
+                    // Update the liked and disliked properties
+                    likedUsers[postIndex].disliked = true;
+                    likedUsers[postIndex].liked = false;
+                    // Update other properties as needed from the response
+                    likedUsers[postIndex].post.dislike_count = response.dislike_count; // Update the dislike_count
+                    // Add other updates as needed
+                }
+                setLikedUsers([...likedUsers]); // Update the state
+            });
+        })
     };
 
     const openCommentModal = (post) => {
@@ -314,30 +125,79 @@ const HomePage = ({ navigation }) => {
     };
 
     const renderComments = () => {
-        if (!selectedPost) return null; // No post selected
+        if (!selectedPost || !selectedPost.postComments || !Array.isArray(selectedPost.postComments)) {
+            return (
+                <Text style={styles.commentTitle}>No comments available</Text>
+            );
+        }
 
         return (
             <ScrollView style={{ maxHeight: 200 }}>
-                <Text style={styles.commentTitle}>Comments for {selectedPost.title}</Text>
+                <Text style={styles.commentTitle}>Comments for {selectedPost.post.title}</Text>
                 {selectedPost.postComments.map((comment, index) => (
                     <Text key={index} style={styles.commentText}>
-                        {comment.text}
+                        {comment.comment}
                     </Text>
                 ))}
             </ScrollView>
         );
     };
 
-    const handleCommentSubmit = () => {
-        // You can handle submitting the comment here
-        // Update the 'comments' array in 'selectedPost' and send it to the server
-        const updatedSelectedPost = { ...selectedPost };
-        updatedSelectedPost.comments.push({ id: Date.now(), text: commentText });
-        setSelectedPost(updatedSelectedPost);
 
-        // Clear the comment input
-        setCommentText('');
+    const sendCommentToServer = async (postId, custId, commentText) => {
+        try {
+            const response = await fetch(`${environment.baseUrl}/post-management/post/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cust_id: custId,
+                    p_id: postId,
+                    comment: commentText,
+                }),
+            });
+
+            if (response) {
+                const data = await response.json();
+                return data.comments; // Assuming the response contains an array of comments
+            } else {
+                throw new Error('Failed to add a comment');
+            }
+        } catch (error) {
+            console.error('Error adding a comment:', error);
+            throw error;
+        }
     };
+
+
+    const handleCommentSubmit = async () => {
+        try {
+            // Check if a post is selected
+            if (!selectedPost) {
+                return;
+            }
+
+            // Send the comment to the server
+            const newComment = await sendCommentToServer(selectedPost.post.p_id, selectedPost.customer.cust_id, commentText);
+
+            // Update the selected post's comments
+            setSelectedPost((prevSelectedPost) => {
+                return {
+                    ...prevSelectedPost,
+                    postComments: [...prevSelectedPost.postComments, newComment],
+                };
+            });
+            console.log(selectedPost, 'comments check ');
+            // Clear the comment input
+            setCommentText('');
+        } catch (error) {
+            // Handle the error (e.g., display an error message)
+            console.error('Failed to submit a comment:', error);
+        }
+    };
+
+
 
     return (
         <View style={{ backgroundColor: 'white' }}>
@@ -349,7 +209,7 @@ const HomePage = ({ navigation }) => {
                     <Text style={styles.titleMain}>Timeline</Text>
                     <Text style={styles.subtitleMain}>Posts</Text>
                 </View>
-                {dummyUsers.map((user, index) => (
+                {likedUsers.map((user, index) => (
                     <View key={user.post.p_id} style={styles.userCard}>
                         <View style={styles.column1}>
                             <Image style={styles.userIcon} source={{ uri: `data:image/png;base64,${user.customer.profile_image}` }} />
@@ -375,22 +235,26 @@ const HomePage = ({ navigation }) => {
                                 </Text>
                             </TouchableOpacity>
                             <Text style={styles.time}>
-                                {formatDistanceToNow(new Date(user.categoryList[0].update_timestamp), { addSuffix: true })}
+                                {formatDistanceToNow(new Date(user.categoryList.map(y => y.update_timestamp).map(z => z)[0]), { addSuffix: true })}
                             </Text>
                         </View>
-                        {user.media && (
+                        {user.post.post_image && (
                             <View style={styles.column3}>
                                 <Image style={styles.media} source={{ uri: `data:image/png;base64,${user.post.post_image}` }} />
                             </View>
                         )}
                         <View style={styles.column4}>
                             <View style={{ flex: 0.4, flexDirection: 'row' }}>
-                                <TouchableOpacity onPress={() => handleLike(index)} style={styles.actionButton}>
-                                    {user.liked ? <LikeFilled width={25} height={25} /> : <Like width={25} height={25} />}
+                                <TouchableOpacity onPress={() => handleLike(index, user)} style={styles.actionButton}>
+                                    {likedPostIds.includes(user.post.p_id) ? (
+                                        <LikeFilled width={25} height={25} />
+                                    ) : (
+                                        <Like width={25} height={25} />
+                                    )}
                                     <Text style={styles.like}>{user.post.like_count}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleDislike(index)} style={styles.actionButton}>
-                                    {user.disliked ? (
+                                <TouchableOpacity onPress={() => handleDislike(index, user)} style={styles.actionButton}>
+                                    {dislikedPostIds.includes(user.post.p_id) ? (
                                         <DislikeFilled width={25} height={25} />
                                     ) : (
                                         <Dislike width={25} height={25} />
@@ -415,16 +279,18 @@ const HomePage = ({ navigation }) => {
                             <View style={{ justifyContent: 'center', alignItems: 'center', paddingBottom: 25 }}>
                                 <Horizontal width={40} height={25} />
                             </View>
-                            {selectedPost && (
+                            {selectedPost && selectedPost.postComments && Array.isArray(selectedPost.postComments) && (
                                 <>
                                     <ScrollView style={{ maxHeight: 1000 }}>
-                                        <Text style={styles.commentTitle}>Comments on {selectedPost.title}</Text>
-                                        {selectedPost.postComments.map((comment, index) => (
+                                        <Text style={styles.commentTitle}>Comments on</Text>
+                                        {selectedPost.postComments && selectedPost.postComments.map((comment, index) => (
                                             <Text key={index} style={styles.commentText}>
                                                 {comment.comment}
                                             </Text>
                                         ))}
                                     </ScrollView>
+
+
                                     <View style={styles.inputContainer}>
                                         <TextInput
                                             style={styles.commentInput}
