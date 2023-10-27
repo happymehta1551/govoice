@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -19,42 +19,241 @@ import Horizontal from '../../assets/horizontal.svg';
 import Submit from '../../assets/submit.svg';
 import Modal from 'react-native-modal';
 import GestureRecognizer from 'react-native-swipe-gestures';
-
+import environment from '../environment';
+import { formatDistanceToNow } from 'date-fns';
 
 const dummyUsers = [
     {
-        id: 1,
-        name: 'User 1',
-        profileImage: 'https://i.pravatar.cc/300',
-        title: 'Title 1',
-        subtitle: 'Subtitle 1',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nislLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet ultricies urna. Duis nec bibendum nisl',
-        media: 'https://picsum.photos/1920/1080',
-        liked: false,
-        disliked: false,
-        comments: [
-            { id: 1, text: 'This is a comment by User 1.' },
-            { id: 2, text: 'Another comment by User 1.' },
+        "post": {
+            "p_id": 1,
+            "cust_id": 1,
+            "title": "First Post",
+            "description": "This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.This is my first post.",
+            "like_count": 16,
+            "dislike_count": 4,
+            "comment_count": 6,
+            "post_active": "1",
+            "post_image": null,
+            "categories": null
+        },
+        "customer": {
+            "cust_id": 1,
+            "first_name": "John",
+            "last_name": "Doe",
+            "ph_no": "123-456-7890",
+            "email": "john.doe@email.com",
+            "gender": "Male",
+            "country": "USA",
+            "state": "New York",
+            "city": "New York",
+            "pincode": "10001",
+            "flag_verify": "1",
+            "dob": "1990-05-15",
+            "role": "C",
+            "cust_active": "1",
+            "region": null,
+            "password": "john",
+            "profile_image": null
+        },
+        "postComments": [
+            {
+                "pc_id": 1,
+                "cust_id": 1,
+                "p_id": 1,
+                "comment": "Great first post!"
+            },
+            {
+                "pc_id": 2,
+                "cust_id": 2,
+                "p_id": 1,
+                "comment": "Looking forward to more posts from you."
+            },
+            {
+                "pc_id": 9,
+                "cust_id": 1,
+                "p_id": 1,
+                "comment": "Added new post"
+            },
+            {
+                "pc_id": 10,
+                "cust_id": 1,
+                "p_id": 1,
+                "comment": "Added new comment in post-1"
+            }
         ],
+        "categoryList": [
+            {
+                "cat_id": 4,
+                "cat_name": "Students",
+                "cat_description": "Student",
+                "cat_timestamp": "2023-10-27 01:41:14",
+                "update_timestamp": "2023-10-27 01:41:14"
+            }
+        ]
     },
     {
-        id: 2,
-        name: 'User 2',
-        profileImage: 'https://i.pravatar.cc/300',
-        title: 'Title 2',
-        subtitle: 'Subtitle 2',
-        description:
-            'This is another sample description for User 2. It can be longer or shorter as needed.',
-        media: 'https://picsum.photos/1920/1080',
-        liked: false,
-        disliked: false,
-        comments: [
-            { id: 1, text: 'Comment by User 2.' },
+        "post": {
+            "p_id": 2,
+            "cust_id": 2,
+            "title": "Summer Vacation",
+            "description": "Enjoying the sun and sand!",
+            "like_count": 15,
+            "dislike_count": 1,
+            "comment_count": 7,
+            "post_active": "1",
+            "post_image": null,
+            "categories": null
+        },
+        "customer": {
+            "cust_id": 2,
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "ph_no": "987-654-3210",
+            "email": "alice.smith@email.com",
+            "gender": "Female",
+            "country": "USA",
+            "state": "California",
+            "city": "Los Angeles",
+            "pincode": "90001",
+            "flag_verify": "1",
+            "dob": "1985-09-20",
+            "role": "C",
+            "cust_active": "1",
+            "region": null,
+            "password": "",
+            "profile_image": null
+        },
+        "postComments": [
+            {
+                "pc_id": 3,
+                "cust_id": 3,
+                "p_id": 2,
+                "comment": "I wish I could go on a summer vacation too."
+            },
+            {
+                "pc_id": 4,
+                "cust_id": 4,
+                "p_id": 2,
+                "comment": "Your pictures are amazing!"
+            }
         ],
+        "categoryList": [
+            {
+                "cat_id": 1,
+                "cat_name": "Travel",
+                "cat_description": "Travel",
+                "cat_timestamp": "2023-10-20 16:41:14",
+                "update_timestamp": "2023-10-20 16:41:14"
+            }
+        ]
     },
-    // Add more user data entries here...
-];
+    {
+        "post": {
+            "p_id": 3,
+            "cust_id": 3,
+            "title": "Tech News",
+            "description": "New tech gadgets and updates.",
+            "like_count": 20,
+            "dislike_count": 3,
+            "comment_count": 8,
+            "post_active": "1",
+            "post_image": null,
+            "categories": null
+        },
+        "customer": {
+            "cust_id": 3,
+            "first_name": "Bob",
+            "last_name": "Johnson",
+            "ph_no": "555-555-5555",
+            "email": "bob.johnson@email.com",
+            "gender": "Male",
+            "country": "USA",
+            "state": "Texas",
+            "city": "Dallas",
+            "pincode": "75001",
+            "flag_verify": "0",
+            "dob": "1988-11-10",
+            "role": "GO",
+            "cust_active": "1",
+            "region": null,
+            "password": "",
+            "profile_image": null
+        },
+        "postComments": [
+            {
+                "pc_id": 5,
+                "cust_id": 1,
+                "p_id": 3,
+                "comment": "Exciting tech news!"
+            }
+        ],
+        "categoryList": [
+            {
+                "cat_id": 2,
+                "cat_name": "Technology",
+                "cat_description": "Tech",
+                "cat_timestamp": "2023-10-20 16:41:14",
+                "update_timestamp": "2023-10-20 16:41:14"
+            }
+        ]
+    },
+    {
+        "post": {
+            "p_id": 4,
+            "cust_id": 4,
+            "title": "Travel Adventure",
+            "description": "Exploring new places and cultures.",
+            "like_count": 18,
+            "dislike_count": 0,
+            "comment_count": 12,
+            "post_active": "1",
+            "post_image": null,
+            "categories": null
+        },
+        "customer": {
+            "cust_id": 4,
+            "first_name": "Emma",
+            "last_name": "Wilson",
+            "ph_no": "222-333-4444",
+            "email": "emma.wilson@email.com",
+            "gender": "Female",
+            "country": "USA",
+            "state": "California",
+            "city": "San Francisco",
+            "pincode": "94101",
+            "flag_verify": "1",
+            "dob": "1992-03-25",
+            "role": "C",
+            "cust_active": "1",
+            "region": null,
+            "password": "",
+            "profile_image": null
+        },
+        "postComments": [
+            {
+                "pc_id": 6,
+                "cust_id": 5,
+                "p_id": 4,
+                "comment": "I love traveling and exploring new places."
+            }
+        ],
+        "categoryList": [
+            {
+                "cat_id": 1,
+                "cat_name": "Travel",
+                "cat_description": "Travel",
+                "cat_timestamp": "2023-10-20 16:41:14",
+                "update_timestamp": "2023-10-20 16:41:14"
+            },
+            {
+                "cat_id": 4,
+                "cat_name": "Students",
+                "cat_description": "Student",
+                "cat_timestamp": "2023-10-20 16:41:14",
+                "update_timestamp": "2023-10-20 16:41:14"
+            }
+        ]
+    }]
 
 const HomePage = ({ navigation }) => {
     const [descriptionExpanded, setDescriptionExpanded] = useState(dummyUsers.map(() => false));
@@ -62,6 +261,20 @@ const HomePage = ({ navigation }) => {
     const [selectedPost, setSelectedPost] = useState(null);
     const [commentText, setCommentText] = useState(''); // State for comment input
     const [likedUsers, setLikedUsers] = useState()
+
+    // useEffect(() => {
+    //     fetch(`${environment.baseUrl}/post-management/posts`, {
+    //     }).then(Response => {
+    //         Response.json().then(response => {
+    //             console.log(response.response.json(), 'testttt to check ');
+    //             setLikedUsers(response.response.json())
+    //         });
+    //     })
+    // }, [])
+
+    // useEffect(() => {
+    //     console.log(likedUsers, 'userr');
+    // }, [likedUsers])
 
     const toggleDescriptionExpanded = (index) => {
         const newDescriptionExpanded = [...descriptionExpanded];
@@ -106,7 +319,7 @@ const HomePage = ({ navigation }) => {
         return (
             <ScrollView style={{ maxHeight: 200 }}>
                 <Text style={styles.commentTitle}>Comments for {selectedPost.title}</Text>
-                {selectedPost.comments.map((comment, index) => (
+                {selectedPost.postComments.map((comment, index) => (
                     <Text key={index} style={styles.commentText}>
                         {comment.text}
                     </Text>
@@ -137,16 +350,16 @@ const HomePage = ({ navigation }) => {
                     <Text style={styles.subtitleMain}>Posts</Text>
                 </View>
                 {dummyUsers.map((user, index) => (
-                    <View key={user.id} style={styles.userCard}>
+                    <View key={user.post.p_id} style={styles.userCard}>
                         <View style={styles.column1}>
-                            <Image style={styles.userIcon} source={{ uri: user.profileImage }} />
+                            <Image style={styles.userIcon} source={{ uri: `data:image/png;base64,${user.customer.profile_image}` }} />
                             <View>
-                                <Text style={styles.userName}>{user.name}</Text>
-                                <Text style={styles.subtitle}>#{user.subtitle}</Text>
+                                <Text style={styles.userName}>{`${user.customer.first_name} ${user.customer.last_name}`}</Text>
+                                <Text style={styles.subtitle}>{user.categoryList.map((category) => `#${category.cat_name}`).join(' ')}</Text>
                             </View>
                         </View>
                         <View style={styles.column2}>
-                            <Text style={styles.title}>{user.title}</Text>
+                            <Text style={styles.title}>{user.post.title}</Text>
                             <Text
                                 style={[
                                     styles.description,
@@ -154,25 +367,27 @@ const HomePage = ({ navigation }) => {
                                 ]}
                                 numberOfLines={10}
                             >
-                                {user.description}
+                                {user.post.description}
                             </Text>
                             <TouchableOpacity onPress={() => toggleDescriptionExpanded(index)}>
                                 <Text style={{ color: 'grey' }}>
                                     {descriptionExpanded[index] ? '...Read Less' : '...Show More'}
                                 </Text>
                             </TouchableOpacity>
-                            <Text style={styles.time}>10 mins ago</Text>
+                            <Text style={styles.time}>
+                                {formatDistanceToNow(new Date(user.categoryList[0].update_timestamp), { addSuffix: true })}
+                            </Text>
                         </View>
                         {user.media && (
                             <View style={styles.column3}>
-                                <Image style={styles.media} source={{ uri: user.media }} />
+                                <Image style={styles.media} source={{ uri: `data:image/png;base64,${user.post.post_image}` }} />
                             </View>
                         )}
                         <View style={styles.column4}>
                             <View style={{ flex: 0.4, flexDirection: 'row' }}>
                                 <TouchableOpacity onPress={() => handleLike(index)} style={styles.actionButton}>
                                     {user.liked ? <LikeFilled width={25} height={25} /> : <Like width={25} height={25} />}
-                                    <Text style={styles.like}>{10}</Text>
+                                    <Text style={styles.like}>{user.post.like_count}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => handleDislike(index)} style={styles.actionButton}>
                                     {user.disliked ? (
@@ -180,7 +395,7 @@ const HomePage = ({ navigation }) => {
                                     ) : (
                                         <Dislike width={25} height={25} />
                                     )}
-                                    <Text style={styles.like}>3</Text>
+                                    <Text style={styles.like}>{user.post.dislike_count}</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flex: 0.6, alignItems: 'flex-end' }}>
@@ -204,9 +419,9 @@ const HomePage = ({ navigation }) => {
                                 <>
                                     <ScrollView style={{ maxHeight: 1000 }}>
                                         <Text style={styles.commentTitle}>Comments on {selectedPost.title}</Text>
-                                        {selectedPost.comments.map((comment, index) => (
+                                        {selectedPost.postComments.map((comment, index) => (
                                             <Text key={index} style={styles.commentText}>
-                                                {comment.text}
+                                                {comment.comment}
                                             </Text>
                                         ))}
                                     </ScrollView>
@@ -214,7 +429,7 @@ const HomePage = ({ navigation }) => {
                                         <TextInput
                                             style={styles.commentInput}
                                             value={commentText}
-                                            onChangeText={(text) => setCommentText(text)}
+                                            onChangeText={(comment) => setCommentText(comment)}
                                             placeholder="Add a comment..."
                                             multiline={true}
                                             numberOfLines={3}
