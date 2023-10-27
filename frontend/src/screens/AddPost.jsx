@@ -1,12 +1,76 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Button} from 'react-native';
 import React from 'react';
 import Close from '../../assets/close.svg';
 import {TextInput} from 'react-native-gesture-handler';
 import AddFolder from '../../assets/folder-add.svg';
 import AddPhoto from '../../assets/Gallary.svg';
 import ArrowNext from '../../assets/ArrowNext.svg';
+import {useState} from 'react'; // Import useState from React
+
 
 const AddPost = () => {
+  const categories = ['Category 1', 'Category 2', 'Category 3']; // Define your categories
+
+  const [cust_id, setTitle] = useState('');
+  const [title, setBody] = useState('');
+  const [description, setAuthor] = useState('mario');
+
+  const formData = new FormData();
+  formData.append('cust_id', '5');
+  formData.append('title', 'title'); // Assuming title is a variable holding the title value
+  formData.append('description', 'body'); // Assuming body is a variable holding the body value
+  formData.append('categories', '2,3');
+
+  const handlePostRequest = (user) => {
+    try {
+      console.log('fsdncjdsbnic');
+      // Define the data you want to send in the request body
+      const postData = {
+        cust_id: '5',
+        title: 'Child Care Policy',
+        description: 'Child Care Policy',
+        categories: '2,3'
+      };
+
+      fetch('https://ce8b-137-207-232-159.ngrok-free.app/post-management/post',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: postData,
+      }).then(response=>{
+        console.log(response);
+        console.log('Response data:', response.data);
+      })
+      // Make a POST request using Axios
+
+      // Handle the response data here
+    } catch (error) {
+      // Handle errors here
+      console.error('POST request failed:', error);
+    }
+  };
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+
+  //   fetch(
+  //     'https://a6b9-2605-8d80-6a1-e59-700e-d4a6-818f-7642.ngrok-free.app/post-management/post',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         cust_id: '123',
+  //         title: 'yourOtherValue',
+  //         description: 'sd',
+  //         categories: '2,3',
+  //       }),
+  //     },
+  //   );
+  // };
+
   return (
     <View style={localStyles.root}>
       <View style={localStyles.createPostContainer}>
@@ -15,34 +79,41 @@ const AddPost = () => {
             <View style={localStyles.greenBox} />
             <Text style={localStyles.headerStyle}>Create Post</Text>
           </View>
-          <View style={localStyles.closeButtonStyle}>
+          {/* <View style={localStyles.closeButtonStyle}>
             <Close width={20} height={20} />
-          </View>
+          </View> */}
         </View>
         <View style={localStyles.postContainer}>
           <Image
             source={{uri: 'https://i.pravatar.cc/300'}}
             style={{width: 50, height: 50, borderRadius: 50}}
           />
+          {/* <ModalDropdown
+          options={categories}
+          defaultValue={selectedCategory}
+          textStyle={localStyles.categoryText}
+          dropdownTextStyle={localStyles.dropdownTextStyle}
+          onSelect={(index, value) => setSelectedCategory(value)}
+        /> */}
           <TextInput
-            placeholderTextColor={'#000000'}
-            placeholder="What's on your mind?"
+            placeholderTextColor={'#CCCCCC'}
+            placeholder="   Policy Title"
             style={localStyles.titleInput}
           />
         </View>
         <TextInput
-          placeholderTextColor={'#000000'}
-          placeholder="What would you like to share?"
+          placeholderTextColor={'#CCCCCC'}
+          placeholder="Policy description"
           style={localStyles.descriptionInput}
         />
 
         <View style={localStyles.footer}>
           <View style={{flexDirection: 'row', gap: 15}}>
-            <AddFolder width={25} height={25} />
-            <AddPhoto width={25} height={25} />
+            {/* <AddFolder width={25} height={25} />
+            <AddPhoto width={25} height={25} /> */}
           </View>
           <View style={localStyles.postBtnStyle}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Post</Text>
+            <Button title="Post" onPress={handlePostRequest("vsdvdsv")} />
             <ArrowNext width={20} height={20} />
           </View>
         </View>
@@ -128,6 +199,7 @@ const localStyles = StyleSheet.create({
     borderRadius: 16,
     padding: 15,
     gap: 10,
+    alignItems: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

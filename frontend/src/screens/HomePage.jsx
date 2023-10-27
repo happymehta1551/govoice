@@ -73,7 +73,8 @@ const HomePage = ({ navigation }) => {
                     likedUsers[postIndex].liked = true;
                     likedUsers[postIndex].disliked = false;
                     // Update other properties as needed from the response
-                    likedUsers[postIndex].post.like_count = response.like_count; // Update the like_count
+                    likedUsers[postIndex].post.like_count = response.like_count; 
+                    likedUsers[postIndex].post.dislike_count = response.dislike_count;// Update the like_count
                     // Add other updates as needed
                 }
                 setLikedUsers([...likedUsers]); // Update the state
@@ -106,6 +107,7 @@ const HomePage = ({ navigation }) => {
                     likedUsers[postIndex].liked = false;
                     // Update other properties as needed from the response
                     likedUsers[postIndex].post.dislike_count = response.dislike_count; // Update the dislike_count
+                    likedUsers[postIndex].post.like_count = response.like_count;
                     // Add other updates as needed
                 }
                 setLikedUsers([...likedUsers]); // Update the state
@@ -160,6 +162,7 @@ const HomePage = ({ navigation }) => {
 
             if (response) {
                 const data = await response.json();
+                console.log(data.comments);
                 return data.comments; // Assuming the response contains an array of comments
             } else {
                 throw new Error('Failed to add a comment');
@@ -188,7 +191,7 @@ const HomePage = ({ navigation }) => {
                     postComments: [...prevSelectedPost.postComments, newComment],
                 };
             });
-            console.log(selectedPost, 'comments check ');
+            console.log(newComment, 'comments check');
             // Clear the comment input
             setCommentText('');
         } catch (error) {
@@ -282,7 +285,7 @@ const HomePage = ({ navigation }) => {
                             {selectedPost && selectedPost.postComments && Array.isArray(selectedPost.postComments) && (
                                 <>
                                     <ScrollView style={{ maxHeight: 1000 }}>
-                                        <Text style={styles.commentTitle}>Comments on</Text>
+                                        {/* <Text style={styles.commentTitle}>Comments on</Text> */}
                                         {selectedPost.postComments && selectedPost.postComments.map((comment, index) => (
                                             <Text key={index} style={styles.commentText}>
                                                 {comment.comment}
